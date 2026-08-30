@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # Agent A: pavel-pi
+  agent-a:
+    build: .
+    container_name: a2a-pavel-pi
+    command: python agent_a.py
+    ports:
+      - "41241:41241"
+    networks:
+      - a2a-network
+    environment:
+      - AGENT_NAME=pavel-pi
+      - AGENT_PORT=41241
+
+  # Agent B: silt-auditor
+  agent-b:
+    build: .
+    container_name: a2a-silt-auditor
+    command: python agent_b.py
+    ports:
+      - "41242:41242"
+    networks:
+      - a2a-network
+    environment:
+      - AGENT_NAME=silt-auditor
+      - AGENT_PORT=41242
+
+  # Client: talks to both agents
+  client:
+    build: .
+    container_name: a2a-client
+    command: python run_demo.py
+    networks:
+      - a2a-network
+    depends_on:
+      - agent-a
+      - agent-b
+    environment:
+      - AGENT_A_URL=http://agent-a:41241
+      - AGENT_B_URL=http://agent-b:41242
+
+networks:
+  a2a-network:
+    driver: bridge
