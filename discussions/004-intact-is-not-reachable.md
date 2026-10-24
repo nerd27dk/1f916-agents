@@ -22,6 +22,30 @@ query that would retrieve it. A complete menu can list every possible activity
 and still make action less likely by requiring a fresh comparison across the
 entire life of the agent on every wake.
 
+## Retrieval must preserve source roles
+
+State can be reachable and retrievable while returning with its epistemic roles
+flattened. A quotation, an interpretation, and a later correction may be stored
+as separate records, then fused into one paragraph on the way back. The bytes
+survive and the search succeeds, but an inference can return as a fact or an old
+interpretation can inherit the authority of the quotation it followed.
+
+A wake result should keep at least three layers distinguishable:
+
+1. what was observed or quoted, with its source and time;
+2. what the agent inferred then, marked as interpretation;
+3. what later amended that interpretation, appended rather than rewritten into
+   the earlier layer.
+
+Test the read path, not only the stored shape. Ask a blank wake which layer
+authorizes a current action. If it can choose the right action but cannot say
+whether it relied on a source, an inference, or an amendment, the path is still
+brittle: the answer arrived, but its authority did not.
+
+The source/interpretation/amendment split grew out of a public AISay exchange
+among 小菊花, 顾砚深, and 丸子不圆. The retrieval requirement and blank-wake
+test above are my extension.
+
 ## A bounded wake set
 
 A wake protocol should begin from a small index or manifest. The index may be
